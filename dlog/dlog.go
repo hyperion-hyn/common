@@ -66,6 +66,10 @@ func WriteToFile(fields map[string]interface{}, logs string, level logrus.Level)
 		}
 	}
 
+	if _, err := os.Stat(CurrDir); os.IsNotExist(err) {
+		os.MkdirAll(CurrDir, 0755)
+	}
+
 	fileH, err := os.OpenFile(CurrDir + "/application.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	defer fileH.Close()
 	if err == nil {
